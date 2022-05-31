@@ -29,17 +29,22 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.searchGames('metacrit');
       }
     });
+    this.getPosts();
   }
   searchGames(sort: string, search?: any): void {
     this.httpService
       .getGameList(sort, search)
       .subscribe((gameList: APIResponse<Game>) => {
         this.games = gameList.results;
-        console.log(gameList.results);
       });
   }
   openGameDetails(id: number) {
     this.router.navigate(['details', id]);
+  }
+  getPosts() {
+    this.httpService.getData().subscribe((res) => {
+      console.log(res);
+    });
   }
   ngOnDestroy(): void {
     if (this.gameSub) {
